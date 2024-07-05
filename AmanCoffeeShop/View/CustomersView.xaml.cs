@@ -13,16 +13,23 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace AmanCoffeeShop
+namespace AmanCoffeeShop.View
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for CustomersView.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class CustomersView : UserControl
     {
-        public MainWindow()
+        public CustomersView()
         {
             InitializeComponent();
-        }       
+        }
+
+        private void MoveListColumn(object sender, RoutedEventArgs e)
+        {
+            var column = (int)customerListGrid.GetValue(Grid.ColumnProperty);
+            var newColumn = column == 0 ? 2 : 0;
+            customerListGrid.SetValue(Grid.ColumnProperty, newColumn);
+        }
     }
 }
