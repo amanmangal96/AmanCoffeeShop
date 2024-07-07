@@ -1,4 +1,6 @@
-﻿using System;
+﻿using AmanCoffeeShop.Data;
+using AmanCoffeeShop.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,16 +22,28 @@ namespace AmanCoffeeShop.View
     /// </summary>
     public partial class CustomersView : UserControl
     {
+        private CustomersViewModel _viewModel;
         public CustomersView()
         {
             InitializeComponent();
+            _viewModel = new CustomersViewModel(new CustomerDataProvider());
+            DataContext = _viewModel;
+            Loaded += CustomersView_Loaded;
+        }
+
+        private async void CustomersView_Loaded(object sender , RoutedEventArgs e)
+        {
+            await _viewModel.LoadAllAsync();
         }
 
         private void MoveListColumn(object sender, RoutedEventArgs e)
         {
-            var column = (int)customerListGrid.GetValue(Grid.ColumnProperty);
-            var newColumn = column == 0 ? 2 : 0;
-            customerListGrid.SetValue(Grid.ColumnProperty, newColumn);
+            _viewModel.MoveNavigation();
+        }
+
+        private void AddClick(object sender, RoutedEventArgs e)
+        {
+            _viewModel.Add();
         }
     }
 }
