@@ -3,16 +3,19 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:AmanCoffeeShop.View"
+             xmlns:local="clr-namespace:AmanCoffeeShop.View" xmlns:converter="clr-namespace:AmanCoffeeShop.Converter"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <converter:NavigationSideToGridConverter x:Key="NavigationSideToGridConv"></converter:NavigationSideToGridConverter>
+    </UserControl.Resources>
     <Grid >
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"></ColumnDefinition>
             <ColumnDefinition></ColumnDefinition>
             <ColumnDefinition Width="Auto"></ColumnDefinition>
         </Grid.ColumnDefinitions>
-        <Grid Grid.Column="{Binding NavigationColumn}" Background="#777">
+        <Grid Grid.Column="{Binding NavigationSide, Converter={StaticResource NavigationSideToGridConv}}" Background="#777">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"></RowDefinition>
                 <RowDefinition />

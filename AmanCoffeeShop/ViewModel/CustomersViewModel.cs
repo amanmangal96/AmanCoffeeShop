@@ -6,6 +6,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static AmanCoffeeShop.ViewModel.CustomersViewModel;
 
 namespace AmanCoffeeShop.ViewModel
 {
@@ -13,7 +14,7 @@ namespace AmanCoffeeShop.ViewModel
     {
         private readonly ICustomerDataProvider _customerDataProvider;
         private CustomerItemViewModel _selectedCustomer;
-        private int navigationColumn;
+        private NavigationSides navigationSide;
 
         public CustomersViewModel(ICustomerDataProvider customerDataProvider)
         {
@@ -48,19 +49,24 @@ namespace AmanCoffeeShop.ViewModel
             SelectedCustomer = viewmodel;
         }
 
-        public int NavigationColumn
+        public NavigationSides NavigationSide
         {
-            get => navigationColumn;
+            get => navigationSide;
             private set 
-            { 
-                navigationColumn = value;
-                RaisePropertyChanged("NavigationColumn"); 
+            {
+                navigationSide = value;
+                RaisePropertyChanged("NavigationSide"); 
             }
         }
 
         internal void MoveNavigation()
         {
-            NavigationColumn = NavigationColumn == 0 ? 2 : 0;
+            NavigationSide = NavigationSide == NavigationSides.Left ? NavigationSides.Right : NavigationSides.Left;
+        }
+
+        public enum NavigationSides
+        {
+            Left,Right 
         }
     }
 }

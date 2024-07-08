@@ -55,6 +55,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Converter\NavigationSideToGridConverter.cs" />
     <Compile Include="Data\CustomerDataProvider.cs" />
     <Compile Include="Model\Customer.cs" />
     <Compile Include="ViewModel\CustomersViewModel.cs" />
