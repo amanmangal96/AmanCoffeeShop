@@ -1,4 +1,5 @@
-﻿using AmanCoffeeShop.Data;
+﻿using AmanCoffeeShop.Command;
+using AmanCoffeeShop.Data;
 using AmanCoffeeShop.Model;
 using System;
 using System.Collections.Generic;
@@ -13,13 +14,23 @@ namespace AmanCoffeeShop.ViewModel
     public class CustomersViewModel : ViewModelBase
     {
         private readonly ICustomerDataProvider _customerDataProvider;
+
+        public DelegateCommand AddCommand { get; }
+        public DelegateCommand MoveCommand { get; }
+        public DelegateCommand DeleteCommand { get; }
+
+
         private CustomerItemViewModel _selectedCustomer;
         private NavigationSides navigationSide;
 
         public CustomersViewModel(ICustomerDataProvider customerDataProvider)
         {
             _customerDataProvider = customerDataProvider;
+            AddCommand = new DelegateCommand(Add);
+            MoveCommand = new DelegateCommand(MoveNavigation);
+            DeleteCommand = new DelegateCommand(Delete, CanDelete);
         }
+
         public ObservableCollection<CustomerItemViewModel> Customers { get; } = new ObservableCollection<CustomerItemViewModel>();
 
         public CustomerItemViewModel SelectedCustomer
@@ -29,6 +40,17 @@ namespace AmanCoffeeShop.ViewModel
             {
                 _selectedCustomer = value;
                 RaisePropertyChanged(nameof(SelectedCustomer));
+                DeleteCommand.RaiseCanExecuteChanged();
+            }
+        }
+
+        public NavigationSides NavigationSide
+        {
+            get => navigationSide;
+            private set
+            {
+                navigationSide = value;
+                RaisePropertyChanged("NavigationSide");
             }
         }
 
@@ -41,7 +63,7 @@ namespace AmanCoffeeShop.ViewModel
             }
         }
 
-        public void Add()
+        public void Add(object parameter)
         {
             var customer = new Customer { FirstName = "New" };
             var viewmodel = new CustomerItemViewModel(customer);
@@ -49,17 +71,21 @@ namespace AmanCoffeeShop.ViewModel
             SelectedCustomer = viewmodel;
         }
 
-        public NavigationSides NavigationSide
+        private void Delete(object obj)
         {
-            get => navigationSide;
-            private set 
+            if(SelectedCustomer != null)
             {
-                navigationSide = value;
-                RaisePropertyChanged("NavigationSide"); 
+                Customers.Remove(SelectedCustomer);
+                SelectedCustomer = null;
             }
         }
 
-        internal void MoveNavigation()
+        private bool CanDelete(object arg)
+        {
+            return SelectedCustomer != null;
+        }
+
+        internal void MoveNavigation(object parameter)
         {
             NavigationSide = NavigationSide == NavigationSides.Left ? NavigationSides.Right : NavigationSides.Left;
         }

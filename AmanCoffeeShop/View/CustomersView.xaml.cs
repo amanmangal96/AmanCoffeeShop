@@ -35,15 +35,5 @@ namespace AmanCoffeeShop.View
         {
             await _viewModel.LoadAllAsync();
         }
-
-        private void MoveListColumn(object sender, RoutedEventArgs e)
-        {
-            _viewModel.MoveNavigation();
-        }
-
-        private void AddClick(object sender, RoutedEventArgs e)
-        {
-            _viewModel.Add();
-        }
     }
 }
