@@ -4,6 +4,13 @@
              xmlns:local="clr-namespace:AmanCoffeeShop"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Resources/Brushes.xaml"></ResourceDictionary>
+                <ResourceDictionary>
+                    <SolidColorBrush x:Key="Sample" Color="Blue"></SolidColorBrush>
+                </ResourceDictionary>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
     </Application.Resources>
 </Application>
